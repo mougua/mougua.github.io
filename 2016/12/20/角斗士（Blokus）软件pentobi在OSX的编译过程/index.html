@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        Flask部署｜Mougua&#39;s blog
+        Mougua&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="http://mougua.github.io/2016/11/14/Python/Flask部署/">
+    <link rel="canonical" href="http://mougua.github.io/2016/12/20/角斗士（Blokus）软件pentobi在OSX的编译过程/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -145,24 +145,15 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>Flask部署</h1>
+                    <h1></h1>
                     
                     <span class="meta">
                          作者 某瓜
                         <span>
-                          日期 2016-11-14
+                          日期 2016-12-20
                          </span>
                     </span>
                     <div class="tags text-center">
-                        
-                        <a class="tag" href="/tags/#Python"
-                           title="Python">Python</a>
-                        
-                        <a class="tag" href="/tags/#Flask"
-                           title="Flask">Flask</a>
-                        
-                        <a class="tag" href="/tags/#nginx"
-                           title="nginx">nginx</a>
                         
                     </div>
                 </div>
@@ -171,7 +162,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            Flask部署
+            
         </span>
     </div>
 </header>
@@ -182,55 +173,50 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <blockquote>
-<p>部署一个Flask写的Python后端，碰到几个不大不小的坑。记录一下。</p>
-</blockquote>
-<h2 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h2><ul>
-<li>前端部署在nginx，后端部署在tornado，前端通过proxy访问后端api。</li>
-</ul>
-<h2 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h2><h3 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h3><ul>
-<li>开启 gzip<figure class="highlight nginx"><table><tr><td class="code"><pre><div class="line"><span class="attribute">gzip</span> <span class="literal">on</span>;</div><div class="line"><span class="attribute">gzip_min_length</span> <span class="number">1k</span>;</div><div class="line"><span class="attribute">gzip_comp_level</span> <span class="number">5</span>;</div><div class="line"><span class="attribute">gzip_types</span> text/json text/plain application/javascript application/x-javascript text/css application/xml text/javascript application/x-httpd-php image/jpeg image/gif image/png;</div></pre></td></tr></table></figure>
+                <hr>
+<p>date: 2016-01-20 11:59<br>status: public<br>tags: [Blokus, pentobi]</p>
+<h2 id="title-角斗士（Blokus）软件pentobi在OSX的编译过程"><a href="#title-角斗士（Blokus）软件pentobi在OSX的编译过程" class="headerlink" title="title: 角斗士（Blokus）软件pentobi在OSX的编译过程"></a>title: 角斗士（Blokus）软件pentobi在OSX的编译过程</h2><p>跟一个妹子玩桌游，发现一个挺有趣的游戏：角斗士（Blokus）。于是想研究一下里面的策略。</p>
+<p>找到一个外国专门研究Blokus的网站：<a href="http://blokusstrategy.com。" target="_blank" rel="external">http://blokusstrategy.com。</a> 里面有些Blokus的策略和题目，需要用一个叫pentobi（<a href="http://pentobi.sourceforge.net" target="_blank" rel="external">http://pentobi.sourceforge.net</a> ）的软件来模拟。在Windows下该网站提供了安装包可以直接安装，但在Linux和OSX下就只能从源码开始编译了。官方还不说OSX下怎么编译。好吧，照着Linux下的方法弄就是了：</p>
+<p>假设已经装好homebrew</p>
+<ol>
+<li><p>安装qt5、gcc5（OSX自带的gcc版本太低）</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">brew install qt5</div><div class="line">brew install gcc</div></pre></td></tr></table></figure>
+<p> 编译gcc的过程在MacBook Air大概要一个多小时，在这么冷的天气可以一边编译一边把本本放进被窝取暖，嗯。</p>
 </li>
-</ul>
+<li><p>然后系统变量加上qt5的库：</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="built_in">export</span> PATH=/usr/<span class="built_in">local</span>/Cellar/qt5/5.5.1/bin:<span class="variable">$PATH</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>pentobi用的是cmake，需要预先指定编译用的gcc版本</p>
 <ul>
-<li>api请求转发到后端服务器<figure class="highlight"><table><tr><td class="code"><pre><div class="line">server&#123;</div><div class="line">  location ^~/api/ &#123;</div><div class="line">    proxy_pass http://127.0.0.1:5000;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li><p>修改CMakeLists.txt，直接在末尾加上</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><div class="line"><span class="built_in">set</span>(CMAKE_C_COMPILER <span class="string">"gcc-5"</span>)</div><div class="line"><span class="built_in">set</span>(CMAKE_CXX_COMPILER <span class="string">"/usr/local/bin/c++-5"</span>)</div><div class="line"><span class="built_in">set</span>(CMAKE_CXX_FLAGS <span class="string">"$&#123;CMAKE_CXX_FLAGS&#125; -std=c++11"</span>)</div><div class="line"><span class="built_in">set</span>(CMAKE_CXX_FLAGS <span class="string">"$&#123;CMAKE_CXX_FLAGS&#125; -ffast-math"</span>)</div></pre></td></tr></table></figure>
+<p>简单粗暴。</p>
+</li>
+<li><p>修改CMakeCache.txt</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">CMAKE_CXX_COMPILER:FILEPATH的值改为/usr/<span class="built_in">local</span>/bin/c++-5</div></pre></td></tr></table></figure>
 </li>
 </ul>
-<h2 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h2><h3 id="升级python到2-7"><a href="#升级python到2-7" class="headerlink" title="升级python到2.7"></a>升级python到2.7</h3><ul>
-<li><a href="http://ruter.sundaystart.net/2015/12/03/Update-python/" target="_blank" rel="external">参考文档</a></li>
-</ul>
-<h3 id="pip"><a href="#pip" class="headerlink" title="pip"></a>pip</h3><ul>
-<li><p>依赖</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">yum -y install pcre-devel openssl openssl-devel</div></pre></td></tr></table></figure>
 </li>
-<li><p>ssl还是没装上，所以不用https方式安装其他库</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 利用豆瓣的源来安装，比较快</span></div><div class="line"> /usr/<span class="built_in">local</span>/bin/pip2.7 install -i http://pypi.douban.com/simple/ --trusted-host pypi.douban.com -r requirements.txt</div></pre></td></tr></table></figure>
+<li><p>生成makefile</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">cmake -DCMAKE_BUILD_TYPE=Release .</div></pre></td></tr></table></figure>
 </li>
-</ul>
-<h3 id="tornado"><a href="#tornado" class="headerlink" title="tornado"></a>tornado</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment">#coding=utf-8</span></div><div class="line"><span class="keyword">from</span> tornado.wsgi <span class="keyword">import</span> WSGIContainer</div><div class="line"><span class="keyword">from</span> tornado.httpserver <span class="keyword">import</span> HTTPServer</div><div class="line"><span class="keyword">from</span> tornado.ioloop <span class="keyword">import</span> IOLoop</div><div class="line"><span class="keyword">from</span> app <span class="keyword">import</span> app <span class="comment"># flask主文件为app.py</span></div><div class="line"></div><div class="line">http_server = HTTPServer(WSGIContainer(app))</div><div class="line">http_server.listen(<span class="number">5000</span>)</div><div class="line">IOLoop.instance().start()</div></pre></td></tr></table></figure>
-<p>然后用python启动上面的文件即可。</p>
-<h2 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h2><ul>
-<li>安装MySQL-Python的时候死活装不上<ul>
-<li>解决：改用 PyMySQL ，python 原生无任何native依赖。而且和 SQLAlchemy 结合良好，SQLAlchemy 在create_engine 的时候连接字符串从 <code>mysql</code> 改成 <code>mysql+pymysql</code> 即可。另外还有个小问题，PyMySQL在调用<code>func.IF(XXX.id is null,1,0)</code>的时候会报错，不知道是啥原因，只好改成<code>func.IF(XXX.id &gt; 0,1,0)</code>。</li>
-</ul>
+<li><p>make &amp;&amp; make install</p>
+<p> 搞定！</p>
 </li>
-<li>用过的 session 记得关闭（手动滑稽）</li>
-</ul>
+</ol>
+<p>PS：文章是几个月前写的，现在妹子已经是我老婆了 ╮(￣▽￣”)╭</p>
 
                 <hr>
                 
                 <!-- 多说 Share start -->
                 <div class="ds-share"
                      style="text-align: right"
-                     data-thread-key="2016/11/14/Python/Flask部署/"
-                     data-title="Flask部署"
-                     data-url="http://mougua.github.io/2016/11/14/Python/Flask部署/"
+                     data-thread-key="2016/12/20/角斗士（Blokus）软件pentobi在OSX的编译过程/"
+                     data-title=""
+                     data-url="http://mougua.github.io/2016/12/20/角斗士（Blokus）软件pentobi在OSX的编译过程/"
                      data-images=""
                      data-content="
-部署一个Flask写的Python后端，碰到几个不大不小的坑。记录一下。
-
-系统架构
-前端部... | Mougua&#39;s blog ">
+date: 2016-01-20 11:59status: publictags: [Blo... | Mougua&#39;s blog ">
                     <div class="ds-share-inline">
                         <ul class="ds-share-icons-16">
                             <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -248,15 +234,10 @@
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2016/12/20/角斗士（Blokus）软件pentobi在OSX的编译过程/" data-toggle="tooltip" data-placement="top"
-                           title="">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2016/09/20/Python/PPMessage笔记/" data-toggle="tooltip" data-placement="top"
-                           title="PPMessage代码阅读笔记">Next Post &rarr;</a>
+                        <a href="/2016/11/14/Python/Flask部署/" data-toggle="tooltip" data-placement="top"
+                           title="Flask部署">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -265,9 +246,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2016/11/14/Python/Flask部署/"
-                         data-title="Flask部署"
-                         data-url="http://mougua.github.io/2016/11/14/Python/Flask部署/">
+                         data-thread-key="2016/12/20/角斗士（Blokus）软件pentobi在OSX的编译过程/"
+                         data-title=""
+                         data-url="http://mougua.github.io/2016/12/20/角斗士（Blokus）软件pentobi在OSX的编译过程/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -279,7 +260,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#系统架构"><span class="toc-text">系统架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前端"><span class="toc-text">前端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#nginx"><span class="toc-text">nginx</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后端"><span class="toc-text">后端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#升级python到2-7"><span class="toc-text">升级python到2.7</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pip"><span class="toc-text">pip</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tornado"><span class="toc-text">tornado</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#坑"><span class="toc-text">坑</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#title-角斗士（Blokus）软件pentobi在OSX的编译过程"><span class="toc-text">title: 角斗士（Blokus）软件pentobi在OSX的编译过程</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -300,15 +281,6 @@
                         <a href="/tags/">FEATURED TAGS</a>
                     </h5>
                     <div class="tags">
-                        
-                        <a class="tag" href="/tags/#Python"
-                           title="Python">Python</a>
-                        
-                        <a class="tag" href="/tags/#Flask"
-                           title="Flask">Flask</a>
-                        
-                        <a class="tag" href="/tags/#nginx"
-                           title="nginx">nginx</a>
                         
                     </div>
                 </section>
