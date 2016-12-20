@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        Mougua&#39;s blog
+        tags｜Mougua&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="http://mougua.github.io/archives/2016/09/">
+    <link rel="canonical" href="http://mougua.github.io/tags/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -123,155 +123,122 @@
 </script>
 
 <!-- Main Content -->
-
+<style>
+    .intro-header .site-heading {
+        margin: 50px;
+    }
+</style>
 
 <!-- Page Header -->
-<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 visible-xs-block visible-sm-block">
-    <div class="row">
-        <header class="intro-header">
-            <div class="container">
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
                 <div class="site-heading text-center">
-                    <div class="about-me">
-                        <!--移动端头部显示-->
-                        <img src="http://tva3.sinaimg.cn/crop.62.0.737.737.180/650e0735jw8f26l0k5552j20m80m8jsq.jpg"/>
-                        <h5><a href="/about/">某瓜</a></h5>
-                        <p>铲屎官一枚</p>
-                    </div>
+                    <h1>tags</h1>
+                    <span class="subheading">喵喵喵</span>
                 </div>
             </div>
-        </header>
+        </div>
     </div>
-</div>
+</header>
+
 <!-- Main Content -->
-<div class="container custom-haojen-container">
-    <!-- Post Container -->
+<div class="container">
     <div class="row">
-        <div class="col-lg-8 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-12 col-xs-12 post-container">
-            <!-- Main Content -->
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <!-- 标签云 -->
+            <div id='tag_cloud' class="tags">
+                
+                <a href="#Python" title="Python" rel="2">Python</a>
+                
+                <a href="#Flask" title="Flask" rel="1">Flask</a>
+                
+                <a href="#nginx" title="nginx" rel="1">nginx</a>
+                
+                <a href="#PPMessage" title="PPMessage" rel="1">PPMessage</a>
+                
+            </div>
 
-
-
-<div class="post-preview "
-     style="background-image: url('http://oc2d2eakl.bkt.clouddn.com/ohime_%E7%9C%8B%E5%9B%BE%E7%8E%8B_%E7%9C%8B%E5%9B%BE%E7%8E%8B.jpg')">
-    <a href="/2016/09/20/Python/PPMessage笔记/">
-        <h2 class="post-title">
-            PPMessage代码阅读笔记
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2016-09-20
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                框架
-后端 Tornado
-不在后端render，由前端负责模版渲染（看起来好像是这样，待确认）
-
-
-前端 Angular
-
-配置
-第一次启动后进入配置界面，配置后的项会保存在 /ppmessage/bootstrap/config.json
-删掉可以重新安装配置过程
-
-
-core/consta..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-
-<!-- 翻页 pager -->
-
-<ul class="pager">
-    
-    
-</ul>
-
-
-        </div>
-        <!-- Sidebar Container -->
-        <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
-
-            <!-- About Me -->
-            <section class="visible-md visible-lg" style="padding: 0 18px">
-                <div class="short-about">
-                    <!--侧边栏头像-->
-                    
-                    <img src="http://tva3.sinaimg.cn/crop.62.0.737.737.180/650e0735jw8f26l0k5552j20m80m8jsq.jpg"/>
-                    
-                    <h5><a href="/about/">某瓜</a></h5>
-                    
-                    <p>铲屎官一枚</p>
-                    
-                    <hr>
-                    <!-- SNS Link 社交 -->
-                    <ul class="list-inline">
-                        
-                        
-                        <li>
-                            <a target="_blank" href="https://twitter.com/mougua">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-                                        </span>
-                            </a>
-                        </li>
-                        
-                        
-
-                        
-
-                        
-
-                        
-                        <li>
-                            <a target="_blank" href="https://github.com/mougua">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                        </span>
-                            </a>
-                        </li>
-                        
-
-                        
-                    </ul>
-                </div>
-            </section>
-
-            <!-- Featured Tags  标签 -->
+            <!-- 标签列表 -->
             
-            <section>
-                <div class="tags">
-                    
-                    
-                    <a href="/tags/#Python" title="Python"
-                       rel="2">Python</a>
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="Python">
+                    <span class="tag-text">Python</span>
+                </span>
+                
+                <div class="post-preview">
+                    <a href="/2016/11/14/Python/Flask部署/">
+                        <h2 class="post-title">
+                            Flask部署
+                        </h2>
+                        
+                    </a>
                 </div>
-            </section>
+                <hr>
+                
+                <div class="post-preview">
+                    <a href="/2016/09/20/Python/PPMessage笔记/">
+                        <h2 class="post-title">
+                            PPMessage代码阅读笔记
+                        </h2>
+                        
+                    </a>
+                </div>
+                <hr>
+                
+            </div>
             
-
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="Flask">
+                    <span class="tag-text">Flask</span>
+                </span>
+                
+                <div class="post-preview">
+                    <a href="/2016/11/14/Python/Flask部署/">
+                        <h2 class="post-title">
+                            Flask部署
+                        </h2>
+                        
+                    </a>
+                </div>
+                <hr>
+                
+            </div>
+            
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="nginx">
+                    <span class="tag-text">nginx</span>
+                </span>
+                
+                <div class="post-preview">
+                    <a href="/2016/11/14/Python/Flask部署/">
+                        <h2 class="post-title">
+                            Flask部署
+                        </h2>
+                        
+                    </a>
+                </div>
+                <hr>
+                
+            </div>
+            
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="PPMessage">
+                    <span class="tag-text">PPMessage</span>
+                </span>
+                
+                <div class="post-preview">
+                    <a href="/2016/09/20/Python/PPMessage笔记/">
+                        <h2 class="post-title">
+                            PPMessage代码阅读笔记
+                        </h2>
+                        
+                    </a>
+                </div>
+                <hr>
+                
+            </div>
             
 
         </div>
