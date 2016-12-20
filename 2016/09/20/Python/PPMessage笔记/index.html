@@ -147,8 +147,11 @@
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#Python,PPMessage"
-                           title="Python,PPMessage">Python,PPMessage</a>
+                        <a class="tag" href="/tags/#Python"
+                           title="Python">Python</a>
+                        
+                        <a class="tag" href="/tags/#PPMessage"
+                           title="PPMessage">PPMessage</a>
                         
                     </div>
                 </div>
@@ -191,7 +194,7 @@
 <li><p>backend/main.py 是整个项目启动后首先加载的</p>
 <ol>
 <li>实例化 MainApplication(tornado.web.Application)<ul>
-<li>MainApplication <ul>
+<li>MainApplication<ul>
 <li>负责初始化 redis、handlers 以及一些配置</li>
 <li>通过 core/main/ppwebserivice.py 注册所有的服务、 handlers 和 delegates</li>
 </ul>
@@ -199,7 +202,7 @@
 </ul>
 </li>
 <li>copy_default_icon 没研究是干嘛的，应该不重要</li>
-<li>load_db_to_cache 将数据库内容加载入缓存        </li>
+<li>load_db_to_cache 将数据库内容加载入缓存</li>
 <li>启动 tornado http 服务</li>
 </ol>
 </li>
@@ -212,7 +215,7 @@
 </ul>
 <h2 id="服务注册机制"><a href="#服务注册机制" class="headerlink" title="服务注册机制"></a>服务注册机制</h2><ul>
 <li><p>直接看如下简化后的代码 （core/main/ppwebservice.py）</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">_r = &#123;&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Meta</span><span class="params">(type)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(cls, name, bases, dict_)</span>:</span></div><div class="line">        _r[name] = cls</div><div class="line">        type.__init__(cls, name, bases, dict_)</div><div class="line">        <span class="keyword">return</span></div><div class="line"></div><div class="line">MetaWebService = Meta(<span class="string">"MetaWebService"</span>, (object,), &#123;&#125;)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">AbstractService</span><span class="params">(MetaWebService)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">somefunction</span><span class="params">()</span>:</span> <span class="comment">#随便写个函数避免类里面什么都没有 </span></div><div class="line">        <span class="keyword">return</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">_r = &#123;&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Meta</span><span class="params">(type)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(cls, name, bases, dict_)</span>:</span></div><div class="line">        _r[name] = cls</div><div class="line">        type.__init__(cls, name, bases, dict_)</div><div class="line">        <span class="keyword">return</span></div><div class="line"></div><div class="line">MetaWebService = Meta(<span class="string">"MetaWebService"</span>, (object,), &#123;&#125;)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">AbstractService</span><span class="params">(MetaWebService)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">somefunction</span><span class="params">()</span>:</span> <span class="comment">#随便写个函数避免类里面什么都没有</span></div><div class="line">        <span class="keyword">return</span></div></pre></td></tr></table></figure>
 </li>
 <li><p>用了上面的代码，只要任何类继承 AbstractService，在 import 这个类的时候就会注册进 _r 里面。</p>
 </li>
@@ -234,7 +237,7 @@
 <li>去掉连接 ppmessage.com 的部分以避免官网连不上的时候卡</li>
 <li><code>settings[&#39;debug&#39;]</code> 写在 main 方法不好，考虑配置单独写在一个文件</li>
 <li><code>== none</code> 改成 <code>is None</code></li>
-<li>以下代码是不推荐的 <figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> sys</div><div class="line">reload(sys)</div><div class="line">sys.setdefaultencoding(<span class="string">'utf8'</span>)</div></pre></td></tr></table></figure>
+<li>以下代码是不推荐的<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> sys</div><div class="line">reload(sys)</div><div class="line">sys.setdefaultencoding(<span class="string">'utf8'</span>)</div></pre></td></tr></table></figure>
 </li>
 </ul>
 <blockquote>
@@ -322,8 +325,11 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#Python,PPMessage"
-                           title="Python,PPMessage">Python,PPMessage</a>
+                        <a class="tag" href="/tags/#Python"
+                           title="Python">Python</a>
+                        
+                        <a class="tag" href="/tags/#PPMessage"
+                           title="PPMessage">PPMessage</a>
                         
                     </div>
                 </section>
