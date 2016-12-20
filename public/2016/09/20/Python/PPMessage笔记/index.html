@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="某瓜在 Github 上的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="某瓜" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        PPMessage代码阅读笔记｜Mougua&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://mougua.github.io/2016/09/20/Python/PPMessage笔记/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('http://ww3.sinaimg.cn/crop.0.152.980.245/650e0735gw1dwlhjd9tojj.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    某瓜
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://ww3.sinaimg.cn/crop.0.152.980.245/650e0735gw1dwlhjd9tojj.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://ww3.sinaimg.cn/crop.0.152.980.245/650e0735gw1dwlhjd9tojj.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>PPMessage代码阅读笔记</h1>
+                    
+                    <span class="meta">
+                         作者 某瓜
+                        <span>
+                          日期 2016-09-20
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#Python,PPMessage"
+                           title="Python,PPMessage">Python,PPMessage</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            PPMessage代码阅读笔记
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <h2 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h2><ul>
+<li>后端 Tornado<ul>
+<li>不在后端render，由前端负责模版渲染（看起来好像是这样，待确认）</li>
+</ul>
+</li>
+<li>前端 Angular</li>
+</ul>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><ul>
+<li>第一次启动后进入配置界面，配置后的项会保存在 /ppmessage/bootstrap/config.json<ul>
+<li>删掉可以重新安装配置过程</li>
+</ul>
+</li>
+<li>core/constant.py 有一堆枚举常量</li>
+<li>core/utils/db2cache.py 有需要缓存的对象的列表</li>
+<li>页面路由总表可以通过在 backend/main.py 的 <code>tornado.web.Application.__init__</code> 方法打印 handlers 获得<blockquote>
+<p>有了总路由表，以后想看某个模块的代码只需要根据链接找到对应的 handler，就可以大概知道在哪里查看/修改代码了（当然Angular的知识也要懂）。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><ul>
+<li><p>backend/main.py 是整个项目启动后首先加载的</p>
+<ol>
+<li>实例化 MainApplication(tornado.web.Application)<ul>
+<li>MainApplication <ul>
+<li>负责初始化 redis、handlers 以及一些配置</li>
+<li>通过 core/main/ppwebserivice.py 注册所有的服务、 handlers 和 delegates</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>copy_default_icon 没研究是干嘛的，应该不重要</li>
+<li>load_db_to_cache 将数据库内容加载入缓存        </li>
+<li>启动 tornado http 服务</li>
+</ol>
+</li>
+<li><p>EntryHandler.get 决定首页路由</p>
+<ul>
+<li>初次启动就路由到 ppconfig</li>
+<li>配置后路由到后台 ppconsole</li>
+</ul>
+</li>
+</ul>
+<h2 id="服务注册机制"><a href="#服务注册机制" class="headerlink" title="服务注册机制"></a>服务注册机制</h2><ul>
+<li><p>直接看如下简化后的代码 （core/main/ppwebservice.py）</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">_r = &#123;&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Meta</span><span class="params">(type)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(cls, name, bases, dict_)</span>:</span></div><div class="line">        _r[name] = cls</div><div class="line">        type.__init__(cls, name, bases, dict_)</div><div class="line">        <span class="keyword">return</span></div><div class="line"></div><div class="line">MetaWebService = Meta(<span class="string">"MetaWebService"</span>, (object,), &#123;&#125;)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">AbstractService</span><span class="params">(MetaWebService)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">somefunction</span><span class="params">()</span>:</span> <span class="comment">#随便写个函数避免类里面什么都没有 </span></div><div class="line">        <span class="keyword">return</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>用了上面的代码，只要任何类继承 AbstractService，在 import 这个类的时候就会注册进 _r 里面。</p>
+</li>
+<li>也正因为这样，backend/main.py 里面有很多 import 的内容是代码里面没有用到的，如果IDE提示 是否优化import，千万别“优化”掉了（除非二次开发的过程发现某个 Service 确定真的不会用到）。</li>
+</ul>
+<h2 id="ppconsole"><a href="#ppconsole" class="headerlink" title="ppconsole"></a>ppconsole</h2><ul>
+<li>还没看😄</li>
+</ul>
+<h2 id="Bugs"><a href="#Bugs" class="headerlink" title="Bugs"></a>Bugs</h2><ul>
+<li><p>输入中文保存不进MySql</p>
+<ul>
+<li><p>修改：db/sqlmysql.py</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">db_string = <span class="string">"mysql+pymysql://%s:%s@%s:%s/%s"</span> % \</div><div class="line"><span class="comment">#改为</span></div><div class="line">db_string = <span class="string">"mysql+pymysql://%s:%s@%s:%s/%s?charset=utf8"</span> % \</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="可以改进的地方"><a href="#可以改进的地方" class="headerlink" title="可以改进的地方"></a>可以改进的地方</h2><ul>
+<li>去掉连接 ppmessage.com 的部分以避免官网连不上的时候卡</li>
+<li><code>settings[&#39;debug&#39;]</code> 写在 main 方法不好，考虑配置单独写在一个文件</li>
+<li><code>== none</code> 改成 <code>is None</code></li>
+<li>以下代码是不推荐的 <figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> sys</div><div class="line">reload(sys)</div><div class="line">sys.setdefaultencoding(<span class="string">'utf8'</span>)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>参考：<a href="http://stackoverflow.com/questions/28657010/dangers-of-sys-setdefaultencodingutf-8" target="_blank" rel="external">这里</a> 和 <a href="http://stackoverflow.com/questions/3828723/why-should-we-not-use-sys-setdefaultencodingutf-8-in-a-py-script" target="_blank" rel="external">这里</a></p>
+<ul>
+<li>Handler 里面打开html文件、读取、返回内容到前端这些代码大量重复，可以考虑封装一下</li>
+<li>改变IP的话需要重新去掉安装 /ppmessage/bootstrap/config.json ？部署或者迁移是个问题。</li>
+</ul>
+</blockquote>
+
+                <hr>
+                
+                <!-- 多说 Share start -->
+                <div class="ds-share"
+                     style="text-align: right"
+                     data-thread-key="2016/09/20/Python/PPMessage笔记/"
+                     data-title="PPMessage代码阅读笔记"
+                     data-url="http://mougua.github.io/2016/09/20/Python/PPMessage笔记/"
+                     data-images=""
+                     data-content="框架
+后端 Tornado
+不在后端render，由前端负责模版渲染（看起来好像是这样，待确认... | Mougua&#39;s blog ">
+                    <div class="ds-share-inline">
+                        <ul class="ds-share-icons-16">
+                            <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                            <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                            <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                            <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                        </ul>
+                        <div class="ds-share-icons-more">
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <!-- 多说 Share end-->
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/11/14/Python/Flask部署/" data-toggle="tooltip" data-placement="top"
+                           title="Flask部署">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2016/09/20/Python/PPMessage笔记/"
+                         data-title="PPMessage代码阅读笔记"
+                         data-url="http://mougua.github.io/2016/09/20/Python/PPMessage笔记/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#框架"><span class="toc-text">框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-text">配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动"><span class="toc-text">启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#服务注册机制"><span class="toc-text">服务注册机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ppconsole"><span class="toc-text">ppconsole</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bugs"><span class="toc-text">Bugs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可以改进的地方"><span class="toc-text">可以改进的地方</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Python,PPMessage"
+                           title="Python,PPMessage">Python,PPMessage</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'mougua';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/mougua">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/mougua">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 某瓜 2016
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://mougua.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="http://tva3.sinaimg.cn/crop.62.0.737.737.180/650e0735jw8f26l0k5552j20m80m8jsq.jpg">
+</body>
+
+</html>
