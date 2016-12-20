@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        PPMessage代码阅读笔记｜Mougua&#39;s blog
+        角斗士（Blokus）软件pentobi在OSX的编译过程｜Mougua&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="http://mougua.github.io/2016/09/20/Python/PPMessage笔记/">
+    <link rel="canonical" href="http://mougua.github.io/2016/01/20/角斗士（Blokus）软件pentobi在OSX的编译过程/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -145,21 +145,21 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>PPMessage代码阅读笔记</h1>
+                    <h1>角斗士（Blokus）软件pentobi在OSX的编译过程</h1>
                     
                     <span class="meta">
                          作者 某瓜
                         <span>
-                          日期 2016-09-20
+                          日期 2016-01-20
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#Python"
-                           title="Python">Python</a>
+                        <a class="tag" href="/tags/#Blokus"
+                           title="Blokus">Blokus</a>
                         
-                        <a class="tag" href="/tags/#PPMessage"
-                           title="PPMessage">PPMessage</a>
+                        <a class="tag" href="/tags/#pentobi"
+                           title="pentobi">pentobi</a>
                         
                     </div>
                 </div>
@@ -168,7 +168,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            PPMessage代码阅读笔记
+            角斗士（Blokus）软件pentobi在OSX的编译过程
         </span>
     </div>
 </header>
@@ -179,95 +179,48 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <h2 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h2><ul>
-<li>后端 Tornado<ul>
-<li>不在后端render，由前端负责模版渲染（看起来好像是这样，待确认）</li>
-</ul>
-</li>
-<li>前端 Angular</li>
-</ul>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><ul>
-<li>第一次启动后进入配置界面，配置后的项会保存在 /ppmessage/bootstrap/config.json<ul>
-<li>删掉可以重新安装配置过程</li>
-</ul>
-</li>
-<li>core/constant.py 有一堆枚举常量</li>
-<li>core/utils/db2cache.py 有需要缓存的对象的列表</li>
-<li>页面路由总表可以通过在 backend/main.py 的 <code>tornado.web.Application.__init__</code> 方法打印 handlers 获得<blockquote>
-<p>有了总路由表，以后想看某个模块的代码只需要根据链接找到对应的 handler，就可以大概知道在哪里查看/修改代码了（当然Angular的知识也要懂）。</p>
-</blockquote>
-</li>
-</ul>
-<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><ul>
-<li><p>backend/main.py 是整个项目启动后首先加载的</p>
+                <p>跟一个妹子玩桌游，发现一个挺有趣的游戏：角斗士（Blokus）。于是想研究一下里面的策略。</p>
+<p>找到一个外国专门研究Blokus的网站：<a href="http://blokusstrategy.com。" target="_blank" rel="external">http://blokusstrategy.com。</a> 里面有些Blokus的策略和题目，需要用一个叫pentobi（<a href="http://pentobi.sourceforge.net" target="_blank" rel="external">http://pentobi.sourceforge.net</a> ）的软件来模拟。在Windows下该网站提供了安装包可以直接安装，但在Linux和OSX下就只能从源码开始编译了。官方还不说OSX下怎么编译。好吧，照着Linux下的方法弄就是了：</p>
+<p>假设已经装好homebrew</p>
 <ol>
-<li>实例化 MainApplication(tornado.web.Application)<ul>
-<li>MainApplication<ul>
-<li>负责初始化 redis、handlers 以及一些配置</li>
-<li>通过 core/main/ppwebserivice.py 注册所有的服务、 handlers 和 delegates</li>
-</ul>
+<li><p>安装qt5、gcc5（OSX自带的gcc版本太低）</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">brew install qt5</div><div class="line">brew install gcc</div></pre></td></tr></table></figure>
+<p> 编译gcc的过程在MacBook Air大概要一个多小时，在这么冷的天气可以一边编译一边把本本放进被窝取暖，嗯。</p>
+</li>
+<li><p>然后系统变量加上qt5的库：</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="built_in">export</span> PATH=/usr/<span class="built_in">local</span>/Cellar/qt5/5.5.1/bin:<span class="variable">$PATH</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>pentobi用的是cmake，需要预先指定编译用的gcc版本</p>
+<ul>
+<li><p>修改CMakeLists.txt，直接在末尾加上</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><div class="line"><span class="built_in">set</span>(CMAKE_C_COMPILER <span class="string">"gcc-5"</span>)</div><div class="line"><span class="built_in">set</span>(CMAKE_CXX_COMPILER <span class="string">"/usr/local/bin/c++-5"</span>)</div><div class="line"><span class="built_in">set</span>(CMAKE_CXX_FLAGS <span class="string">"$&#123;CMAKE_CXX_FLAGS&#125; -std=c++11"</span>)</div><div class="line"><span class="built_in">set</span>(CMAKE_CXX_FLAGS <span class="string">"$&#123;CMAKE_CXX_FLAGS&#125; -ffast-math"</span>)</div></pre></td></tr></table></figure>
+<p>简单粗暴。</p>
+</li>
+<li><p>修改CMakeCache.txt</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">CMAKE_CXX_COMPILER:FILEPATH的值改为/usr/<span class="built_in">local</span>/bin/c++-5</div></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
-<li>copy_default_icon 没研究是干嘛的，应该不重要</li>
-<li>load_db_to_cache 将数据库内容加载入缓存</li>
-<li>启动 tornado http 服务</li>
+<li><p>生成makefile</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">cmake -DCMAKE_BUILD_TYPE=Release .</div></pre></td></tr></table></figure>
+</li>
+<li><p>make &amp;&amp; make install</p>
+<p> 搞定！</p>
+</li>
 </ol>
-</li>
-<li><p>EntryHandler.get 决定首页路由</p>
-<ul>
-<li>初次启动就路由到 ppconfig</li>
-<li>配置后路由到后台 ppconsole</li>
-</ul>
-</li>
-</ul>
-<h2 id="服务注册机制"><a href="#服务注册机制" class="headerlink" title="服务注册机制"></a>服务注册机制</h2><ul>
-<li><p>直接看如下简化后的代码 （core/main/ppwebservice.py）</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">_r = &#123;&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Meta</span><span class="params">(type)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(cls, name, bases, dict_)</span>:</span></div><div class="line">        _r[name] = cls</div><div class="line">        type.__init__(cls, name, bases, dict_)</div><div class="line">        <span class="keyword">return</span></div><div class="line"></div><div class="line">MetaWebService = Meta(<span class="string">"MetaWebService"</span>, (object,), &#123;&#125;)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">AbstractService</span><span class="params">(MetaWebService)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">somefunction</span><span class="params">()</span>:</span> <span class="comment">#随便写个函数避免类里面什么都没有</span></div><div class="line">        <span class="keyword">return</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>用了上面的代码，只要任何类继承 AbstractService，在 import 这个类的时候就会注册进 _r 里面。</p>
-</li>
-<li>也正因为这样，backend/main.py 里面有很多 import 的内容是代码里面没有用到的，如果IDE提示 是否优化import，千万别“优化”掉了（除非二次开发的过程发现某个 Service 确定真的不会用到）。</li>
-</ul>
-<h2 id="ppconsole"><a href="#ppconsole" class="headerlink" title="ppconsole"></a>ppconsole</h2><ul>
-<li>还没看😄</li>
-</ul>
-<h2 id="Bugs"><a href="#Bugs" class="headerlink" title="Bugs"></a>Bugs</h2><ul>
-<li><p>输入中文保存不进MySql</p>
-<ul>
-<li><p>修改：db/sqlmysql.py</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">db_string = <span class="string">"mysql+pymysql://%s:%s@%s:%s/%s"</span> % \</div><div class="line"><span class="comment">#改为</span></div><div class="line">db_string = <span class="string">"mysql+pymysql://%s:%s@%s:%s/%s?charset=utf8"</span> % \</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="可以改进的地方"><a href="#可以改进的地方" class="headerlink" title="可以改进的地方"></a>可以改进的地方</h2><ul>
-<li>去掉连接 ppmessage.com 的部分以避免官网连不上的时候卡</li>
-<li><code>settings[&#39;debug&#39;]</code> 写在 main 方法不好，考虑配置单独写在一个文件</li>
-<li><code>== none</code> 改成 <code>is None</code></li>
-<li>以下代码是不推荐的<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> sys</div><div class="line">reload(sys)</div><div class="line">sys.setdefaultencoding(<span class="string">'utf8'</span>)</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>参考：<a href="http://stackoverflow.com/questions/28657010/dangers-of-sys-setdefaultencodingutf-8" target="_blank" rel="external">这里</a> 和 <a href="http://stackoverflow.com/questions/3828723/why-should-we-not-use-sys-setdefaultencodingutf-8-in-a-py-script" target="_blank" rel="external">这里</a></p>
-<ul>
-<li>Handler 里面打开html文件、读取、返回内容到前端这些代码大量重复，可以考虑封装一下</li>
-<li>改变IP的话需要重新去掉安装 /ppmessage/bootstrap/config.json ？部署或者迁移是个问题。</li>
-</ul>
-</blockquote>
+<p>PS：文章是几个月前写的，现在妹子已经是我老婆了 ╮(￣▽￣”)╭</p>
 
                 <hr>
                 
                 <!-- 多说 Share start -->
                 <div class="ds-share"
                      style="text-align: right"
-                     data-thread-key="2016/09/20/Python/PPMessage笔记/"
-                     data-title="PPMessage代码阅读笔记"
-                     data-url="http://mougua.github.io/2016/09/20/Python/PPMessage笔记/"
+                     data-thread-key="2016/01/20/角斗士（Blokus）软件pentobi在OSX的编译过程/"
+                     data-title="角斗士（Blokus）软件pentobi在OSX的编译过程"
+                     data-url="http://mougua.github.io/2016/01/20/角斗士（Blokus）软件pentobi在OSX的编译过程/"
                      data-images=""
-                     data-content="框架
-后端 Tornado
-不在后端render，由前端负责模版渲染（看起来好像是这样，待确认... | Mougua&#39;s blog ">
+                     data-content="跟一个妹子玩桌游，发现一个挺有趣的游戏：角斗士（Blokus）。于是想研究一下里面的策略。
+找... | Mougua&#39;s blog ">
                     <div class="ds-share-inline">
                         <ul class="ds-share-icons-16">
                             <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -286,15 +239,10 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2016/11/14/Python/Flask部署/" data-toggle="tooltip" data-placement="top"
-                           title="Flask部署">&larr; Previous Post</a>
+                        <a href="/2016/09/20/Python/PPMessage笔记/" data-toggle="tooltip" data-placement="top"
+                           title="PPMessage代码阅读笔记">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2016/01/20/角斗士（Blokus）软件pentobi在OSX的编译过程/" data-toggle="tooltip" data-placement="top"
-                           title="角斗士（Blokus）软件pentobi在OSX的编译过程">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
@@ -302,9 +250,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2016/09/20/Python/PPMessage笔记/"
-                         data-title="PPMessage代码阅读笔记"
-                         data-url="http://mougua.github.io/2016/09/20/Python/PPMessage笔记/">
+                         data-thread-key="2016/01/20/角斗士（Blokus）软件pentobi在OSX的编译过程/"
+                         data-title="角斗士（Blokus）软件pentobi在OSX的编译过程"
+                         data-url="http://mougua.github.io/2016/01/20/角斗士（Blokus）软件pentobi在OSX的编译过程/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -316,7 +264,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#框架"><span class="toc-text">框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-text">配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动"><span class="toc-text">启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#服务注册机制"><span class="toc-text">服务注册机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ppconsole"><span class="toc-text">ppconsole</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bugs"><span class="toc-text">Bugs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可以改进的地方"><span class="toc-text">可以改进的地方</span></a></li></ol>
+                    
                 </div>
             </div>
         </div>
@@ -338,11 +286,11 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#Python"
-                           title="Python">Python</a>
+                        <a class="tag" href="/tags/#Blokus"
+                           title="Blokus">Blokus</a>
                         
-                        <a class="tag" href="/tags/#PPMessage"
-                           title="PPMessage">PPMessage</a>
+                        <a class="tag" href="/tags/#pentobi"
+                           title="pentobi">pentobi</a>
                         
                     </div>
                 </section>
