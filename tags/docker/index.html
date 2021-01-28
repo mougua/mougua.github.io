@@ -22,7 +22,7 @@
         
     </title>
 
-    <link rel="canonical" href="http://mougua.github.io/tags/pentobi/">
+    <link rel="canonical" href="http://mougua.github.io/tags/docker/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -153,18 +153,19 @@
 
 <div class="post-preview "
      style="background-image: url('http://oc2d2eakl.bkt.clouddn.com/ohime_%E7%9C%8B%E5%9B%BE%E7%8E%8B_%E7%9C%8B%E5%9B%BE%E7%8E%8B.jpg')">
-    <a href="/2016/01/20/角斗士（Blokus）软件pentobi在OSX的编译过程/">
+    <a href="/2021/01/28/机子断电后docker启动不能/">
         <h2 class="post-title">
-            角斗士（Blokus）软件pentobi在OSX的编译过程
+            机子断电后docker启动不能
         </h2>
         <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2016-01-20
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2021-01-28
         </p>
         
         <div class="post-content-preview">
             <p>
-                跟一个妹子玩桌游，发现一个挺有趣的游戏：角斗士（Blokus）。于是想研究一下里面的策略。
-找到一个外国专门研究Blokus的网站：http://blokusstrategy.com。 里面有些Blokus的策略和题目，需要用一个叫pentobi（http://pentobi.sourcefor..
+                公司的一台机子断电后，发现docker启动不了。于是排查一下错误：
+cat /var/log/messages|grep docker|grep fatal
+发现错误：”Error starting daemon: Error initializing network controller: c..
             </p>
         </div>
     </a>
