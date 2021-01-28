@@ -22,7 +22,7 @@
         
     </title>
 
-    <link rel="canonical" href="http://mougua.github.io/tags/PPMessage/">
+    <link rel="canonical" href="http://mougua.github.io/tags/docker-疑难杂症/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -153,29 +153,19 @@
 
 <div class="post-preview "
      style="background-image: url('http://oc2d2eakl.bkt.clouddn.com/ohime_%E7%9C%8B%E5%9B%BE%E7%8E%8B_%E7%9C%8B%E5%9B%BE%E7%8E%8B.jpg')">
-    <a href="/2016/09/20/Python/PPMessage笔记/">
+    <a href="/2021/01/28/机子断电后docker启动不能/">
         <h2 class="post-title">
-            PPMessage代码阅读笔记
+            机子断电后docker启动不能
         </h2>
         <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2016-09-20
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2021-01-28
         </p>
         
         <div class="post-content-preview">
             <p>
-                框架
-后端 Tornado
-不在后端render，由前端负责模版渲染（看起来好像是这样，待确认）
-
-
-前端 Angular
-
-配置
-第一次启动后进入配置界面，配置后的项会保存在 /ppmessage/bootstrap/config.json
-删掉可以重新安装配置过程
-
-
-core/consta..
+                公司的一台机子断电后，发现docker启动不了。于是排查一下错误：
+cat /var/log/messages|grep docker|grep fatal
+发现错误：”Error starting daemon: Error initializing network controller: c..
             </p>
         </div>
     </a>

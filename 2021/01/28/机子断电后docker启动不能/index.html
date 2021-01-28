@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        Mougua&#39;s blog
+        机子断电后docker启动不能｜Mougua&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="http://mougua.github.io/tags/PPMessage/">
+    <link rel="canonical" href="http://mougua.github.io/2021/01/28/机子断电后docker启动不能/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -43,7 +43,7 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "false" data-istags="true
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -124,210 +124,163 @@
 
 <!-- Main Content -->
 
+<!--only post-->
 
-<!-- Page Header -->
-<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 visible-xs-block visible-sm-block">
-    <div class="row">
-        <header class="intro-header">
-            <div class="container">
-                <div class="site-heading text-center">
-                    <div class="about-me">
-                        <!--移动端头部显示-->
-                        <img src="http://tva3.sinaimg.cn/crop.62.0.737.737.180/650e0735jw8f26l0k5552j20m80m8jsq.jpg"/>
-                        <h5><a href="/about/">某瓜</a></h5>
-                        <p>铲屎官一枚</p>
+
+<img class="wechat-title-img"
+     src="http://ww3.sinaimg.cn/crop.0.152.980.245/650e0735gw1dwlhjd9tojj.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://ww3.sinaimg.cn/crop.0.152.980.245/650e0735gw1dwlhjd9tojj.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>机子断电后docker启动不能</h1>
+                    
+                    <span class="meta">
+                         作者 某瓜
+                        <span>
+                          日期 2021-01-28
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#docker, 疑难杂症"
+                           title="docker, 疑难杂症">docker, 疑难杂症</a>
+                        
                     </div>
                 </div>
             </div>
-        </header>
+        </div>
     </div>
-</div>
-<!-- Main Content -->
-<div class="container custom-haojen-container">
-    <!-- Post Container -->
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-12 col-xs-12 post-container">
-            <!-- Main Content -->
+    <div class="post-title-haojen">
+        <span>
+            机子断电后docker启动不能
+        </span>
+    </div>
+</header>
 
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>公司的一台机子断电后，发现docker启动不了。于是排查一下错误：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">cat /var/<span class="built_in">log</span>/messages|grep docker|grep fatal</div></pre></td></tr></table></figure>
+<p>发现错误：”Error starting daemon: Error initializing network controller: could not delete the default bridge network: network bridge has active endpoints”。</p>
+<p>然后参照 <a href="https://stackoverflow.com/questions/33600154/docker-not-starting-could-not-delete-the-default-bridge-network-network-bridg" target="_blank" rel="external">https://stackoverflow.com/questions/33600154/docker-not-starting-could-not-delete-the-default-bridge-network-network-bridg</a> 的方法，把 /var/lib/docker/network/files/ 下面的文件mv到别处，搞定！</p>
 
+                <hr>
+                
 
-<div class="post-preview "
-     style="background-image: url('http://oc2d2eakl.bkt.clouddn.com/ohime_%E7%9C%8B%E5%9B%BE%E7%8E%8B_%E7%9C%8B%E5%9B%BE%E7%8E%8B.jpg')">
-    <a href="/2016/09/20/Python/PPMessage笔记/">
-        <h2 class="post-title">
-            PPMessage代码阅读笔记
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2016-09-20
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                框架
-后端 Tornado
-不在后端render，由前端负责模版渲染（看起来好像是这样，待确认）
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/08/02/ntitled/" data-toggle="tooltip" data-placement="top"
+                           title="装lightGBM的时候碰到conda的一些坑">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
 
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2021/01/28/机子断电后docker启动不能/"
+                         data-title="机子断电后docker启动不能"
+                         data-url="http://mougua.github.io/2021/01/28/机子断电后docker启动不能/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
 
-前端 Angular
+                
 
-配置
-第一次启动后进入配置界面，配置后的项会保存在 /ppmessage/bootstrap/config.json
-删掉可以重新安装配置过程
+            </div>
 
-
-core/consta..
-            </p>
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    
+                </div>
+            </div>
         </div>
-    </a>
 
-</div>
+        <div class="row">
+            <!-- Sidebar Container -->
 
-<hr>
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
 
-
-
-
-<!-- 翻页 pager -->
-
-<ul class="pager">
-    
-    
-</ul>
-
-
-        </div>
-        <!-- Sidebar Container -->
-        <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
-
-            <!-- About Me -->
-            <section class="visible-md visible-lg" style="padding: 0 18px">
-                <div class="short-about">
-                    <!--侧边栏头像-->
-                    
-                    <img src="http://tva3.sinaimg.cn/crop.62.0.737.737.180/650e0735jw8f26l0k5552j20m80m8jsq.jpg"/>
-                    
-                    <h5><a href="/about/">某瓜</a></h5>
-                    
-                    <p>铲屎官一枚</p>
-                    
-                    <hr>
-                    <!-- SNS Link 社交 -->
-                    <ul class="list-inline">
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
                         
+                        <a class="tag" href="/tags/#docker, 疑难杂症"
+                           title="docker, 疑难杂症">docker, 疑难杂症</a>
                         
-                        <li>
-                            <a target="_blank" href="https://twitter.com/mougua">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-                                        </span>
-                            </a>
-                        </li>
-                        
-                        
+                    </div>
+                </section>
+                
 
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
                         
-                        <li>
-                            <a target="_blank" href="http://weibo.com/81365855">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-                                        </span>
-                            </a>
-                        </li>
-                        
-
-                        
-
-                        
-                        <li>
-                            <a target="_blank" href="https://github.com/mougua">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                        </span>
-                            </a>
-                        </li>
-                        
-
+                        <li><a href="http://www.365ykc.com">优客魔方</a></li>
                         
                     </ul>
                 </div>
-            </section>
-
-            <!-- Featured Tags  标签 -->
-            
-            <section>
-                <div class="tags">
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    <a href="/tags/#Python" title="Python"
-                       rel="2">Python</a>
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-
-                    
-                    <a href="/tags/#Spring Boot" title="Spring Boot" rel="1">Spring Boot</a>
-                    
-                    <a href="/tags/#Idea" title="Idea" rel="1">Idea</a>
-                    
-                    <a href="/tags/#Gradle" title="Gradle" rel="1">Gradle</a>
-                    
-                    <a href="/tags/#docker, 疑难杂症" title="docker, 疑难杂症" rel="1">docker, 疑难杂症</a>
-                    
-                    <a href="/tags/#Blokus" title="Blokus" rel="1">Blokus</a>
-                    
-                    <a href="/tags/#pentobi" title="pentobi" rel="1">pentobi</a>
-                    
-                    <a href="/tags/#Python" title="Python" rel="2">Python</a>
-                    
-                    <a href="/tags/#Flask" title="Flask" rel="1">Flask</a>
-                    
-                    <a href="/tags/#nginx" title="nginx" rel="1">nginx</a>
-                    
-                    <a href="/tags/#PPMessage" title="PPMessage" rel="1">PPMessage</a>
-                    
-                </div>
-            </section>
-            
-
-            
-            <hr>
-            <h5 style="text-align: center;">Friends</h5>
-            <ul class="list-inline" style="text-align: center;">
                 
-                <li><a href="http://www.365ykc.com" target="_blank">优客魔方</a></li>
-                
-            </ul>
-            
-
+            </div>
         </div>
+
     </div>
-</div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'mougua';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
 
 <!-- Footer -->
 <!-- Footer -->
