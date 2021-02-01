@@ -37,7 +37,7 @@
 <style>
 
     header.intro-header {
-        background-image: url('http://oc2d2eakl.bkt.clouddn.com/miaosan2.jpg')
+        background-image: url('http://tva3.sinaimg.cn/crop.62.0.737.737.180/650e0735jw8f26l0k5552j20m80m8jsq.jpg')
     }
 </style>
 <!-- hack iOS CSS :active style -->
@@ -236,17 +236,13 @@
                 </ul>
 
                 
-                <!-- 多说评论框 start -->
-                <div class="comment">
-                    <div class="ds-thread"
-                         data-thread-key="2016/11/14/Python/Flask部署/"
-                         data-title="Flask部署"
-                         data-url="http://mougua.github.io/2016/11/14/Python/Flask部署/">
-                    </div>
-                </div>
-                <!-- 多说评论框 end -->
-                
 
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
                 
 
             </div>
@@ -306,25 +302,23 @@
 </article>
 
 
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    // dynamic User by Hux
-    var _user = 'mougua';
 
-    // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user};
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "chengk0118@gmail.com";
+    var disqus_identifier = "http://mougua.github.io/2016/11/14/Python/Flask部署/";
+    var disqus_url = "http://mougua.github.io/2016/11/14/Python/Flask部署/";
+
     (function () {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';
-        ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0]
-        || document.getElementsByTagName('body')[0]).appendChild(ds);
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
-<!-- 多说公共JS代码 end -->
-
+<!-- disqus 公共JS代码 end -->
 
 
 
